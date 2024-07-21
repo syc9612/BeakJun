@@ -19,4 +19,6 @@ class BinaryNode{
     BinaryNode* getRight(){return right;}
 
     bool isLeaf(){return left==NULL && right==NULL;}
+
+    
 };
