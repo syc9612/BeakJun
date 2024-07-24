@@ -5,7 +5,9 @@
 후위: 왼 - 오 - 루트
 */
 class BinaryTree{
-    BinaryNode* root;
+    //클래스의 전역변수 선언은 기본값이 private. 따라서 다른 헤더파일에서 상속받아 쓰려면 에러가 생긴다.
+    protected:
+        BinaryNode* root;
     public:
     BinaryTree(): root(NULL){}
     void setRoot(BinaryNode* node){ root = node;}
