@@ -67,6 +67,45 @@ class BinSrchTree : public BinaryTree{
         }
     }
     void remove(BinaryNode* parent, BinaryNode* node){
-        
+        if(node ->isLeaf()){
+            if(parent == NULL){
+                node = NULL;
+            }
+            else{
+                if( parent->getLeft() == node ){
+                    parent->setleft(NULL);
+                }
+                else 
+                    parent->setRight(NULL);
+            }
+        }
+
+        else if(node ->getLeft() == NULL|| node->getRight()==NULL){
+            BinaryNode* child = (node->getLeft() != NULL) ? node->getLeft() : node->getRight();
+
+            if(node == root) root = child;
+            else{
+                if(parent->getLeft() == node)
+                    parent->setleft(child);
+                else
+                    parent->setRight(child);
+            }
+        }
+        else{
+            BinaryNode* succp = node;
+            BinaryNode* succ = node -> getRight();
+            while(succ->getLeft() !=NULL){
+                succp = succ;
+                succ= succ->getLeft();
+            }
+            if(succp->getLeft() == succ)
+                succp->setleft(succ->getRight());
+            else  
+                succp->setRight(succ->getRight());
+            node->setData(succ->getData());
+
+            node = succ;
+        }
+        delete node;
     }
 };
