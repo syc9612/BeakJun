@@ -38,7 +38,21 @@ class MaxHeap{
         HeapNode last = node[size--];
         int parent =1;
         int child =2;
+        while(child <= size){
+            if( child < size
+                && getLeft(parent).getkey() < getRight(parent).getkey())
+                child++;
+            if(last.getkey() >= node[child].getkey()) break;
+
+            node[parent] = node[child];
+            parent = child;
+            child *= 2;
+        }
+
+        node[parent] = last;
+        return item;
         
+
     }
     HeapNode find(){return node[1];}
 
