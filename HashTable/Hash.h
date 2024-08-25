@@ -34,5 +34,7 @@ ll hashGen(char key[]){
 }
 
 int m_strcmp(const char * str1, const char* str2){
-    while 
+    while (*str1 != '\0' || *str2 != '\0'){
+        
+    } 
 }
