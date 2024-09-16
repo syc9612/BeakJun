@@ -92,8 +92,8 @@ class BinSrchTree : public BinaryTree{
             }
         }
         else{
-            BinaryNode* succp = node;
-            BinaryNode* succ = node -> getRight();
+            BinaryNode* succp = node; //후계노드 부모노드
+            BinaryNode* succ = node -> getRight(); //후계노드: succ
             while(succ->getLeft() !=NULL){
                 succp = succ;
                 succ= succ->getLeft();

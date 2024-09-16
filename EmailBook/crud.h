@@ -5,7 +5,7 @@
 std::string address_check(std::string address){
     //if @ is not existed, error
     std::cout << address.find("@");
-    if(addess.find("@") == string::npos){
+    if(address.find("@") == std::string::npos){
         std::cout <<"no @ in Email."<<std::endl;
     }
     else{
@@ -13,21 +13,21 @@ std::string address_check(std::string address){
     }
 }
 
-char enroll_nm_adr(char name, char address){
+char enroll_nm_adr(){
     //sign in
     //https://m.blog.naver.com/sea5727/220978963342
     
-    std::fsteram dataFile;
+    std::fstream dataFile;
     std::string buffer;
 
-    dataFile.open("user_info.txt", ios::out);
-    std::dataFile << "new word in file" << std::endl;
+    dataFile.open("user_info.txt", std::ios::out);
+    dataFile << "new word in file" << std::endl;
     dataFile.write("12345",5);
     dataFile.close();
-    dataFile.open("user_info.txt", ios::in);
+    dataFile.open("user_info.txt", std::ios::in);
 
     getline(dataFile, buffer);
-    std::cout << vuffer << std::endl;
+    std::cout << buffer << std::endl;
     char charbuff[10] = {0}; //initialize
     dataFile.read(charbuff,5);
     std::cout<<charbuff<<std::endl;
@@ -39,11 +39,11 @@ char enroll_nm_adr(char name, char address){
 
 void print(char trg_name){
     //print all
-    if(tar_name == NULL)
+    if(trg_name == NULL){}
 
     //print target
-    else(
+    else{
 
-    )
+    }
 }
 
