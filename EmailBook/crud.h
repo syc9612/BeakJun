@@ -7,43 +7,47 @@ std::string address_check(std::string address){
     std::cout << address.find("@");
     if(address.find("@") == std::string::npos){
         std::cout <<"no @ in Email."<<std::endl;
+        
     }
     else{
         std::cout <<"check done" << std::endl;
     }
 }
 
-char enroll_nm_adr(){
+void enroll_nm_adr(){
     //sign in
     //https://m.blog.naver.com/sea5727/220978963342
     
-    std::fstream dataFile;
-    std::string buffer;
+    /*
+    C++ 스타일의 파일 입출력을 위해 std::ofstream을 사용하도록 변경
+    FILE* fp; //fp file pointer
+    fp = fopen("./address_info.txt","wt");
+    */
 
-    dataFile.open("user_info.txt", std::ios::out);
-    dataFile << "new word in file" << std::endl;
-    dataFile.write("12345",5);
-    dataFile.close();
-    dataFile.open("user_info.txt", std::ios::in);
+    std::ofstream fp("./address_info.txt");
 
-    getline(dataFile, buffer);
-    std::cout << buffer << std::endl;
-    char charbuff[10] = {0}; //initialize
-    dataFile.read(charbuff,5);
-    std::cout<<charbuff<<std::endl;
-    dataFile.close();
 
-    //duplicate check
-
-}
-
-void print(char trg_name){
-    //print all
-    if(trg_name == NULL){}
-
-    //print target
-    else{
-
+    if (!fp.is_open()) {
+        std::cerr << "파일을 열 수 없습니다 - 종료 \n";
+        return;
     }
+    
+    std::string str_name;
+    std::cout << "이름 입력: " <<std::endl;
+    std::getline(std::cin, str_name); // 전체 입력을 받기 위해 getline 사용
+
+    std::string str_address;
+    std::cout << "주소 입력: " << std::endl;
+    std::getline(std::cin, str_address); // 주소도 동일하게 입력 받음
+
+    address_check(str_address);
+
+    fp << str_name << std::endl;
+    fp << str_address << std::endl;
+
+    fp.close();
+    std::cout << "Complete" << std::endl;
 }
+
+
 
