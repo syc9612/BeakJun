@@ -26,8 +26,8 @@ public:
     const EmailBook& deleteByIndex(int index);
     const EmailBook& update(int index, ...);
 
-    void save(어디에)
-    void load(어디서)
+    void save(어디에);
+    void load(어디서);
 
 private:
     std::vector<int, EmailBookEntry> books_;
