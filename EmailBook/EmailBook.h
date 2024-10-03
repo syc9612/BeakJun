@@ -49,8 +49,8 @@ void EmailBook::setAddress(std::string Book_Address){
     this->address_ = Book_Address;
 }
 void EmailBook::readAddress(){
-    std::cout << "귀하의 이름은 : " << this->name_ << std::endl;
-	std::cout << "귀하의 이메일은 : " << this->address_ << std::endl;
+    std::cout << "Your name is : " << this->name_ << std::endl;
+	std::cout << "Your Email address is : " << this->address_ << std::endl;
 }
 
 void EmailBook::deleteAddress(){
