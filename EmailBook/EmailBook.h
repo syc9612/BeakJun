@@ -1,11 +1,15 @@
 #include <string>
 #include <iostream>
 
+#include <fstream>
+#include <cstdio>
+
 //https://github.com/leejeong0495/AddressProject/blob/main/Address.cpp
 class EmailBook{
     private:
     int index_;
     std::string name_, address_;
+
 
     public:
     EmailBook();
@@ -38,6 +42,8 @@ std::string EmailBook::getName() const{
 }
 
 void EmailBook::setName(std::string Book_Name){
+    std::ofstream fp("./address_info.txt", std::ios::app);
+    
     this->name_ = Book_Name;
 }
 
