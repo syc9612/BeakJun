@@ -1,10 +1,7 @@
 //#include "EmailBook.h"
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <algorithm>
 #include "AddressBook.h"
+#include <regex>
+
 void displayMenu(){
     std::cout << "\nAddress Book Menu:\n";
     std::cout << "1. Add Contact\n";
@@ -14,6 +11,10 @@ void displayMenu(){
     std::cout << "5. Export to CSV\n";
     std::cout << "6. Exit\n";
     std::cout << "Choose an option: ";
+}
+bool isValidEmail_regex(const std::string& email){
+    const std::regex pattern(R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)");
+    return std::regex_match(email, pattern);
 }
 
 int main() {
@@ -33,7 +34,12 @@ int main() {
             std::cin >> name;
             std::cout << "Enter email: ";
             std::cin >> email;
-            addressBook.addContact(name, email);
+            if(isValidEmail_regex(email)){
+                addressBook.addContact(name, email);
+            }
+            else{
+                std::cout << "it is wrong format.\n";
+            }
             break;
 
         case 2:
@@ -49,7 +55,10 @@ int main() {
             std::cin >> newName;
             std::cout << "Enter new email: ";
             std::cin >> newEmail;
-            addressBook.updateContact(email, newName, newEmail);
+            if(isValidEmail_regex(newEmail)){
+                addressBook.updateContact(email, newName, newEmail);
+            }
+            else{ std::cout << "it is wrong format.\n";}
             break;
 
         case 4:
