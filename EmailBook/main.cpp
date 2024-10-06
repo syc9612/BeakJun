@@ -1,6 +1,10 @@
 //#include "EmailBook.h"
+
+
 #include "AddressBook.h"
 #include <regex>
+#include <chrono>
+#include <thread>
 
 void displayMenu(){
     std::cout << "\nAddress Book Menu:\n";
@@ -77,6 +81,11 @@ int main() {
 
         default:
             std::cout << "Invalid choice. Please try again.\n";
+            std::cin.clear();
+            while(std::cin.get() == '\n'){
+                continue;
+            }
+           
         }
     }
 
