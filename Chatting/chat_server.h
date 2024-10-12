@@ -12,22 +12,36 @@ class server{
     public:
     void socket_create();
     void close();
-    void listen();
+    
 };
 
 void server::socket_create(){
     WSADATA wsaData; //WSADATA 클래스를 갖다 쓰네;
     WSAStartup(MAKEWORD(2,2), &wsaData);
 
-    SOCKET hListen;
-    hListen = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    SOCKET hSocket;
+    hSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     SOCKADDR_IN tListenAddr = {};
     tListenAddr.sin_family = AF_INET;
     tListenAddr.sin_port = PORT;
     tListenAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    bind(hListen, (SOCKADDR*)&tListenAddr, sizeof(tListenAddr));
+    bind(hSocket, (SOCKADDR*)&tListenAddr, sizeof(tListenAddr));
+    listen(hSocket, SOMAXCONN);
+
+    SOCKADDR_IN tClntAddr = {};
+    int iClientSize = sizeof(tClntAddr);
+    SOCKET hClient = accept(hSocket, (SOCKADDR*)&tClntAddr, &iClientSize); //소켓에서 들어오는 연결을 수락하는 함수.
+
+    char cMsg[] = "Client Send";
+    send(hSocket, cMsg, strlen(cMsg), 0);
+
+    char cBuffer[PACKET_SIZE] = {};
+    recv(hSocket, cBuffer, PACKET_SIZE, 0);
+    printf("Recv MSG : %s\n", cBuffer);
+
+    closesocket(hSocket);
 
     /*
     struct sockaddr_in {
@@ -41,7 +55,4 @@ void server::socket_create(){
 
 void server::close(){
     WSACleanup();
-}
-void server::listen(){
-
 }
