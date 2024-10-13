@@ -4,7 +4,7 @@
 
 #define PORT 4578
 #define PACKET_SIZE 1024
-#define SERVER_IP "172.30.1.62"
+#define SERVER_IP "172.30.1.55"
 //https://easycode.tistory.com/19 참고
 
 class client{
