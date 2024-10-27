@@ -64,3 +64,45 @@ bool video::isValid(std::string video_len, std::string pos, std::string op_start
 
     return true;
 }
+
+#include <string>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+int timeToSeconds(const string& time) {
+    int minutes = stoi(time.substr(0, 2));
+    int seconds = stoi(time.substr(3, 2));
+    return minutes * 60 + seconds;
+}
+
+string secondsToTime(int totalSeconds) {
+    int minutes = totalSeconds / 60;
+    int seconds = totalSeconds % 60;
+    stringstream ss;
+    ss << (minutes < 10 ? "0" : "") << minutes << ":";
+    ss << (seconds < 10 ? "0" : "") << seconds;
+    return ss.str();
+}
+
+string solution(string video_len, string pos, string op_start, string op_end, vector<string> commands) {
+    int videoLen = timeToSeconds(video_len);
+    int currentTime = timeToSeconds(pos);
+    int openingStart = timeToSeconds(op_start);
+    int openingEnd = timeToSeconds(op_end);
+
+    for (const string& command : commands) {
+        if (command == "next") {
+            currentTime = min(currentTime + 10, videoLen);
+        } else if (command == "prev") {
+            currentTime = max(currentTime - 10, 0);
+        }
+        
+        if (currentTime >= openingStart && currentTime <= openingEnd) {
+            currentTime = openingEnd;
+        }
+    }
+
+    return secondsToTime(currentTime);
+}
