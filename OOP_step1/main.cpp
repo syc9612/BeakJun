@@ -48,5 +48,10 @@ int main(void){
 }
 
 void showMenu(){
-
+    std::cout<<"------Menu------"<<std::endl;
+    std::cout<<"1. Make Account " <<std::endl;
+    std::cout<<"2. Deposite " <<std::endl;
+    std::cout<<"3. withdraw " <<std::endl;
+    std::cout<<"4. Account infomation all print" <<std::endl;
+    std::cout<<"5. Exit" <<std::endl;
 }
