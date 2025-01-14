@@ -1,5 +1,7 @@
 #include <iostream>
 #include <algorithm>
+#include <cstring>
+#include <cstdlib>
 
 int n,m;
 int a_array[100000];
@@ -30,6 +32,11 @@ void binary_search(int x){
     return;
 }
 
+char* MakeStrAdr(int len){
+    char* str =  (char*)malloc(sizeof(char)* len);
+    return str;
+}
+
 int main(){
     //c 와 c++의 표준 stream의 동기화를 비활성화한다. : 시간절약 ,, 백준 전용이라 봐야함.
     std::ios_base::sync_with_stdio(0);
@@ -52,5 +59,14 @@ int main(){
         std::cin >> x;
         binary_search(x);
     }
+    /*
+    Subject: 길이정보를 인자로 받아서, 해당 길이의 문자열 저장이 가능한 배열을 생성하고, 그 배열의 주소 값을 반환하는 함수 정의해보기
+    Date: 01/14
+    */
+   char* str=MakeStrAdr(20);
+   strcpy(str, "I am so happy");
+   std::cout << str << std::endl;
+   free(str);
+
     return 0;
 }
