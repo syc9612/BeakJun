@@ -1,72 +1,72 @@
+#pragma comment(lib, "ws2_32.lib") 
+
+#include <WinSock2.h>
 #include <iostream>
-#include <algorithm>
-#include <cstring>
-#include <cstdlib>
+#include <string>
+#include <thread>
+#include <vector>
+#include <string>
+#include <mysql/jdbc.h>
+#include <sstream>
 
-int n,m;
-int a_array[100000];
-int temp;
+#define MAX_SIZE 1024
+#define MAX_CLIENT 3
 
+struct SOCKET_INFO{
+    SOCKET ack=0;
+    std::string user = "";
+};
 
-//이진트리
-void binary_search(int x){
-    int left = 0, mid = 0 , right = n-1;
+std::vector<SOCKET_INFO> sck_list;
+SOCKET_INFO server_sock;
+int client_count = 0;
 
-    while(left <= right){
-        mid = (left + right) /2;
+void server_init(){
+    server_sock.sck = scoket(PF_INET, SOCK_STREAM, IPPROTO_TCP); //설명 필요요
+    SOCKADDR_IN server_addr = {};
+    server_addr.sin_familly = AF_INET;
+    server_addr.sin_port = htons(7777); //
+    server_addr.sin_Addr.s_Addr = htonl(INADDR_ANY);
 
-        //탈출 조건: a_array에서 x를 찾은 경우, 오름차순으로 정렬해야만 함.
-        if(a_array[mid] == x){
-            std::cout << 1 << std::endl;
-            return;
-        }
-        else if(a_array[mid] > x){
-            right = mid -1;
-        }
-        else{
-            left = mid + 1;
-        }
-
-    }
-    std:: cout<<0<<std::endl;
-    return;
+    bind(server_sock.sck, (sockaddr*)&server_addr, sizeof(server_Addr)); //설정한 소켓 정보를 소켓에 바인딩한다
+    listen(server_Sock.sck, SOMAXCONN); //소켓을 대기상태로 기다린다.
+    server_sock.user = "Server";
 }
 
-char* MakeStrAdr(int len){
-    char* str =  (char*)malloc(sizeof(char)* len);
-    return str;
+void add_client(){
+    SOCKADDR_IN addr = {};
+    int addrsize = sizeof(addr);
+    char buf[MAX_SIZE] = {};
+    
+    ZeroMemory(&addr, addrsize);
+    SOCKET_INFO new_client = {};
+
+    net_clinet.sck = accept(server_sock.sck, (sockaddr*)&addr, &addrsize);
+    recv(new_client.sck, buf, MAX_SIZE, 0);
+    new_clinet.user = std::string(buf);
+
+    std::string msg = "-" + new_clinet.user + " Enter.";
+    std::cout << msg << std::endl;
+    sck_list.push_back(new_clinet);
+    print_clients();
+
+    std::thread th(recv_msg, client_count);
+    th.detach();
+    client_count++;
+
+    std::cout << "Now users : " << client_count << std::endl;
+    send_msg(msg.c_str());
 }
 
-int main(){
-    //c 와 c++의 표준 stream의 동기화를 비활성화한다. : 시간절약 ,, 백준 전용이라 봐야함.
-    std::ios_base::sync_with_stdio(0);
-    //cin 과 cout이 하나라 묶어주는 과정: 시간 절약
-    std::cin.tie(0);
-
-    //전체 케이스 선언
-    std::cin >> n;
-    //배열에 숫자 입력
-    for (int i=0;i<n; i++){
-        std::cin >> a_array[i];
-    
+void send_msg(const char* msg){
+    for(int i=0;i<client_count;i++){
+        send(sck_list[i].sck, msg, MAX_SIZE, 0);
     }
-    
-    //오름차순 정렬.
-    std::sort(a_array, a_array+n);
-
-    int x;
-    for(int i=0;i<m;i++){
-        std::cin >> x;
-        binary_search(x);
+}
+void send_msg_noteMe(const char* msg, int sender_idx){
+    for(int i=0;i<client_count;i++){
+        if( i != sender_idx){
+            send(sck_list[i].sck, msg, MAX_SIZE, 0);
+        }
     }
-    /*
-    Subject: 길이정보를 인자로 받아서, 해당 길이의 문자열 저장이 가능한 배열을 생성하고, 그 배열의 주소 값을 반환하는 함수 정의해보기
-    Date: 01/14
-    */
-   char* str=MakeStrAdr(20);
-   strcpy(str, "I am so happy");
-   std::cout << str << std::endl;
-   free(str);
-
-    return 0;
 }

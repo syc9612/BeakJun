@@ -1,4 +1,4 @@
-#include <cstdip>
+#include <cstdio>
 
 class Node{
     protected:
@@ -11,6 +11,6 @@ public:
     }
 
     int getId(){return id;}
-    Node* getLink(){return l};
-    void setLink(Node* l){link = l};
+    Node* getLink(){return link;};
+    void setLink(Node* l){link = l;};
 };
